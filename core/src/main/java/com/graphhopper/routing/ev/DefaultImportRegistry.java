@@ -48,6 +48,7 @@ import com.graphhopper.routing.util.parsers.OSMHikeRatingParser;
 import com.graphhopper.routing.util.parsers.OSMHorseRatingParser;
 import com.graphhopper.routing.util.parsers.OSMKerbParser;
 import com.graphhopper.routing.util.parsers.OSMLanesParser;
+import com.graphhopper.routing.util.parsers.OSMLevelParser;
 import com.graphhopper.routing.util.parsers.OSMMaxAxleLoadParser;
 import com.graphhopper.routing.util.parsers.OSMMaxHeightParser;
 import com.graphhopper.routing.util.parsers.OSMMaxLengthParser;
@@ -194,16 +195,17 @@ public class DefaultImportRegistry implements ImportRegistry {
                             (lookup, props) -> new OSMHazmatWaterParser(lookup.getEnumEncodedValue(
                                             HazmatWater.KEY, HazmatWater.class)));
         else if (Lanes.KEY.equals(name))
-            return ImportUnit.create(name, props -> Lanes.create(), (lookup,
-                            props) -> new OSMLanesParser(lookup.getIntEncodedValue(Lanes.KEY)));
+            return ImportUnit.create(name, props -> Lanes.create(), 
+                            (lookup, props) -> new OSMLanesParser(lookup
+                                            .getIntEncodedValue(Lanes.KEY)));
+        else if (Level.KEY.equals(name))
+            return ImportUnit.create(name, props -> Level.create(), 
+                            (lookup, props) -> new OSMLevelParser(lookup
+                                            .getIntEncodedValue(Level.KEY)));
         else if (Footway.KEY.equals(name))
             return ImportUnit.create(name, props -> Footway.create(),
                             (lookup, props) -> new OSMFootwayParser(lookup
                                             .getEnumEncodedValue(Footway.KEY, Footway.class)));
-        else if (Level.KEY.equals(name))
-            return ImportUnit.create(name, props -> Level.create(),
-                            (lookup, props) -> new OSMLevelParser(lookup
-                                            .getEnumEncodedValue(Level.KEY, Level.class)));
         else if (OSMWayID.KEY.equals(name))
             return ImportUnit.create(name, props -> OSMWayID.create(), (lookup,
                             props) -> new OSMWayIDParser(lookup.getIntEncodedValue(OSMWayID.KEY)));
