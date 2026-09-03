@@ -201,7 +201,7 @@ public class DefaultImportRegistry implements ImportRegistry {
         else if (Level.KEY.equals(name))
             return ImportUnit.create(name, props -> Level.create(), 
                             (lookup, props) -> new OSMLevelParser(lookup
-                                            .getIntEncodedValue(Level.KEY)));
+                                            .getDecimalEncodedValue(Level.KEY)));
         else if (Footway.KEY.equals(name))
             return ImportUnit.create(name, props -> Footway.create(),
                             (lookup, props) -> new OSMFootwayParser(lookup
