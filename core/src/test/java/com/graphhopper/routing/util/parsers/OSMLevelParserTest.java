@@ -110,4 +110,19 @@ class OSMLevelParserTest {
         parser.handleWayTags(edgeId, edgeIntAccess, readerWay, relFlags);
         Assertions.assertEquals(164.7, levelEnc.getDecimal(false, edgeId, edgeIntAccess), 1e-10);
     }
+
+    @Test
+    void rangeLevel() {
+        ReaderWay readerWay = new ReaderWay(1);
+        EdgeIntAccess edgeIntAccess = new ArrayEdgeIntAccess(1);
+        int edgeId = 0;
+
+        readerWay.setTag("level", "0-2");
+        parser.handleWayTags(edgeId, edgeIntAccess, readerWay, relFlags);
+        Assertions.assertEquals(1.0, levelEnc.getDecimal(false, edgeId, edgeIntAccess));
+
+        readerWay.setTag("level", "-5--2"); // This is a confusing range ! Not a double minus.
+        parser.handleWayTags(edgeId, edgeIntAccess, readerWay, relFlags);
+        Assertions.assertEquals(-3.5, levelEnc.getDecimal(false, edgeId, edgeIntAccess));
+    }
 }

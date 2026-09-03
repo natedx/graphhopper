@@ -19,14 +19,21 @@
 package com.graphhopper.routing.util.parsers;
 
 import com.graphhopper.reader.ReaderWay;
-import com.graphhopper.routing.ev.EdgeIntAccess;
 import com.graphhopper.routing.ev.DecimalEncodedValue;
+import com.graphhopper.routing.ev.EdgeIntAccess;
 import com.graphhopper.storage.IntsRef;
+
+import java.util.regex.Pattern;
 
 /**
  * https://wiki.openstreetmap.org/wiki/Key:level
  */
 public class OSMLevelParser implements TagParser {
+    // Splits levels by semicolon (e.g. "0;1") or range hyphen (e.g. "0-2" or "-2 - -1").
+    // Lookbehind (?<=\d) ensures the hyphen is preceded by a digit, preventing leading minus signs (e.g. "-1") from being treated as range separators.
+    // Lookahead (?=-?\d) ensures the hyphen is followed by a number.
+    private static final Pattern LEVEL_SPLIT_PATTERN = Pattern.compile(";|(?<=\\d)\\s*-\\s*(?=-?\\d)");
+
     private final DecimalEncodedValue levelEnc;
 
     public OSMLevelParser(DecimalEncodedValue levelEnc) {
@@ -39,8 +46,8 @@ public class OSMLevelParser implements TagParser {
 
         if (way.hasTag("level")) {
             String levels = way.getTag("level");
-            
-            String[] levelsTok = levels.split(";|(?<=\\d)\\s*-\\s*(?=-?\\d)");
+
+            String[] levelsTok = LEVEL_SPLIT_PATTERN.split(levels);
 
             if (levelsTok.length == 1) {
                 try {
