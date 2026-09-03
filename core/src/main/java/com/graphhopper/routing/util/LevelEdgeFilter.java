@@ -1,3 +1,8 @@
+import com.graphhopper.routing.util;
+import com.graphhopper.util.*;
+import com.graphhopper.routing.ev.DecimalEncodedValue;
+
+
 public class LevelEdgeFilter implements EdgeFilter {
     private final EdgeFilter edgeFilter;
     private final DecimalEncodedValue levelEnc;
@@ -18,6 +23,6 @@ public class LevelEdgeFilter implements EdgeFilter {
         
         double edgeLevel = edgeState.get(levelEnc);
         // Level EV factor is 0.1, check within precision tolerance
-        return Math.abs(edgeLevel - level) < 0.1;
+        return Math.abs(edgeLevel - level) < 0.05;
     }
 }
