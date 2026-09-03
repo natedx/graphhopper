@@ -357,7 +357,7 @@ public class GraphHopperWeb {
             for (Double heading : ghRequest.getHeadings())
                 url += "&heading=" + heading;
         
-        if (ghRequest.getLevels().stream().anyMatch(h -> !Double.isNan(h)))
+        if (ghRequest.getLevels().stream().anyMatch(h -> !Double.isNaN(h)))
             for (Double level : ghRequest.getLevels())
                 url += "&level=" + level;
 

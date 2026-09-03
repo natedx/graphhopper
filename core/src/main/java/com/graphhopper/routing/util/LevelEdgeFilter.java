@@ -1,4 +1,5 @@
-import com.graphhopper.routing.util;
+package com.graphhopper.routing.util;
+
 import com.graphhopper.util.*;
 import com.graphhopper.routing.ev.DecimalEncodedValue;
 
