@@ -45,7 +45,7 @@ public class GHRequest {
     private List<String> curbsides = new ArrayList<>();
     private List<String> snapPreventions;
     private List<String> pathDetails = new ArrayList<>();
-    private List<String> levels = new ArrayList<>();
+    private List<Double> levels = new ArrayList<>();
     private String algo = "";
     private Locale locale = Locale.US;
     private CustomModel customModel;
@@ -238,7 +238,7 @@ public class GHRequest {
         return this;
     }
 
-    public List<String> getLevels() {
+    public List<Double> getLevels() {
         return this.levels;
     }
 
